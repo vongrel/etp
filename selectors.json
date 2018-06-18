@@ -1,0 +1,94 @@
+{
+  "User Data": {
+    "Юр лицо из РФ": {
+      "first": {
+        "field name": "name",
+        "type": "css",
+        "selector": "input[name=username]",
+        "content": "MOCK"
+      },
+      "second": {
+        "field name": "pwd",
+        "type": "css",
+        "selector": "input[name=pass]",
+        "content": "MOCK"
+      },
+      "third": {
+        "field name": "confpwd",
+        "type": "css",
+        "selector": "input[name=confpass]",
+        "content": "MOCK"
+      },
+      "forth": {
+        "field name": "codeword",
+        "type": "css",
+        "selector": "input[name=secret_phraze]",
+        "content": "MOCK"
+      },
+      "fifth": {
+        "field name": "email",
+        "type": "css",
+        "selector": "input[name=user_email]",
+        "content": "MOCK"
+      },
+      "6": {
+        "field name": "last_name",
+        "type": "css",
+        "selector": "input[name=last_name]",
+        "content": "Ivanoff"
+      },
+      "7": {
+        "field name": "first_name",
+        "type": "css",
+        "selector": "input[name=first_name]",
+        "content": "Ivan"
+      },
+      "8": {
+        "field name": "user_job",
+        "type": "css",
+        "selector": "input[name=user_job]",
+        "content": "manager"
+      },
+      "9": {
+        "field name": "phone1",
+        "type": "css",
+        "selector": ".x-box-layout-ct.x-form-field.cleanbackground > div > input:nth-child(4)",
+        "content": "111"
+      },
+      "10": {
+        "field name": "phone2",
+        "type": "css",
+        "selector": ".x-box-layout-ct.x-form-field.cleanbackground > div > input:nth-child(6)",
+        "content": "222222"
+      }
+    }
+  },
+  "Production field": {
+    "1": "//span[contains(text(), \"17 Бумага и изделия из бумаги\")]",
+    "2": "//span[contains(text(), \"17.1 Целлюлоза, бумага и картон\")]",
+    "3": "//span[contains(text(), \"17.11 Целлюлоза\")]",
+    "4": "//span[contains(text(), \"17.11.1 Целлюлоза древесная и целлюлоза из прочих волокнистых материалов\")]",
+    "5": "//span[contains(text(), \"17.11.11 Целлюлоза древесная, растворимые сорта\")]",
+    "6": "//span[contains(text(), \"17.11.11.000 Целлюлоза древесная, растворимые сорта\")]"
+  },
+  "Corporate Data": {
+    "Юр лицо из РФ": {
+      "first": {
+        "type": "css",
+        "selector": "input[name=email]",
+        "content": "tmp@tmp.com"
+      },
+      "second": {
+        "type": "css",
+        "selector": "input[name=\"phone[city_code]\"]",
+        "content": "111"
+      },
+      "third": {
+        "type": "css",
+        "selector": "input[name=\"phone[number]\"]",
+        "content": "222222"
+      }
+    }
+  }
+}
+
