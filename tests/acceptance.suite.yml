@@ -8,6 +8,8 @@ actor: AcceptanceTester
 modules:
     enabled:
         - \Helper\Acceptance
+        - WebDriver
+        - Asserts
         - WebDriver:
            url: 'https://CENSORED@chernobrivets-corp.etpgpb.ru'
            window_size: false # disabled in ChromeDriver

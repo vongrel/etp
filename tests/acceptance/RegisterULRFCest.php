@@ -58,8 +58,7 @@ class RegisterULRFCest
         $I->click('Зарегистрироваться');
         $I->wait(5);
         $I->click('Подтвердить');
-        $I->wait(1);
-        $I->waitForText('Активация адреса электронной почты', 15);
+        $I->waitForText('Активация адреса электронной почты', 25);
         $admin = $I->haveFriend('admin');
         $admin->does(function(AcceptanceTester $I) {
             $I->amOnPage(LoginPage::$URL);
@@ -76,7 +75,7 @@ class RegisterULRFCest
             $I->wait(2);
         });
         $admin->leave();
-        $I->wait(5);
+        $I->wait(2);
         $I->fillField('input[name=key]',$Register::getParamFromTmpStorage('confirmCode'));
         $I->click('Активировать');
         $I->wait(1);
@@ -101,7 +100,7 @@ class RegisterULRFCest
         $I->wait(1);
         $I->click('Подтвердить');
         $I->click('Отказаться от опроса');
-        $I->wait(1);
+        $I->wait(7);
 
 
     }

@@ -108,23 +108,39 @@ class Register
     {
         $I = $this->tester;
         $userEmail = Register::getParamFromTmpStorage('email');
-        $I->wait(1);
-
-        $I->fillField('.x-form-text.x-form-field.search_field_cls', $userEmail);
-        $I->click('Искать');
-/*Insert try catch here to handle cases when email isn't send yet
-        $I->click('Расширенный поиск');
-        $I->fillField('input[name=email]', $userEmail);
-        $I->click('неотправленных');
-        $I->clickWithLeftButton('.x-panel-fbar.x-small-editor.x-toolbar-layout-ct button');
-*/
         $I->wait(2);
-        $I->click('Просмотр');
+        try {
+            $I->click('Расширенный поиск');
+            $I->wait(2);
+            $I->fillField('input[name=email]', $userEmail);
+
+            $I->clickWithLeftButton('//*[contains(text(), "отправленных")]');
+            $I->clickWithLeftButton('.x-panel-fbar.x-small-editor.x-toolbar-layout-ct button');
+            $I->wait(3);
+        } catch (Exception $e) {
+            //$I->fillField('.x-form-text.x-form-field.search_field_cls', $userEmail);
+            //$I->click('Искать');
+            $I->click('Расширенный поиск');
+            $I->wait(2);
+            $I->fillField('input[name=email]', $userEmail);
+            $I->clickWithLeftButton('//*[contains(text(), "неотправленных")]');
+            $I->clickWithLeftButton('.x-panel-fbar.x-small-editor.x-toolbar-layout-ct button');
+            $I->wait(3);
+            $I->see('.x-action-col-0.x-action-col-icon');
+        }
+        $I->clickWithLeftButton('.x-action-col-0.x-action-col-icon');
         $I->wait(3);
         $text = $I->grabTextFrom('form > label');
         if(preg_match("/активации: (.*?) /", $text,$matches))
+        {
             $text1 = $matches[1];
-        Register::saveParamTmpStorage('confirmCode',$text1);
+            Register::saveParamTmpStorage('confirmCode',$text1);
+        }
+        else
+        {
+            echo 'Email with verify code was not sent';
+        }
+
     }
 
     public function getParamFromTmpStorage($emailOrPwd)

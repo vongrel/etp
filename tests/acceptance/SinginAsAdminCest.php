@@ -1,5 +1,6 @@
 <?php
 use Page\Login as LoginPage;
+
 /**
  * @group admin
  */
@@ -25,6 +26,8 @@ class SinginAsAdminCest
         $I->fillField(LoginPage::$loginField, LoginPage::getLogin('admin'));
         $I->fillField(LoginPage::$passwordField, LoginPage::getPassword('admin'));
         $I->click(LoginPage::$loginButton);
-        $I->see('Welcome, bill');
+        $I->wait(2);
+        $text = $I->grabTextFrom('.uib-u-name');
+        $I->assertContains('Администратор ЭТП Системы', $text);
     }
 }
