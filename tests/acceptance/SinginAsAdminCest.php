@@ -15,7 +15,7 @@ class SinginAsAdminCest
     {
     }
 
-    // tests
+    // Логин как администратор. Создан для выполнения из Teamcity
     public function loginAsAdmin(AcceptanceTester $I, $scenario)
     {
 

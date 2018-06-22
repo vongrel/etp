@@ -38,14 +38,16 @@ class Register
     {
         $mock = 'autotestUser' . date('m-d-h-i');
         $mockEmail = $mock . '@' . $mock;
+        //Сохраненеи сгенерированного емейла для дальнейшего поиска кода верификации админом
         Register::saveParamTmpStorage('email', $mockEmail);
         $json_data = $json_data['User Data'];
         $json_data = $json_data[$typeOfRegistration];
         foreach ($json_data as $key1 => $value1) {
-            print_r($json_data[$key1]);
             $selector = $json_data[$key1]['selector'];
             $content = $json_data[$key1]['content'];
             if ($content != NULL) {
+                //'MOCK' означает, что контент будет сгенерирован. Сделано для отличия пользователей и
+                //унификации функции
                 if ($content == 'MOCK') {
                     if ($json_data[$key1]['field name'] == 'email') {
                         Register::fillInput($selector, $mockEmail);
@@ -109,6 +111,8 @@ class Register
         $I = $this->tester;
         $userEmail = Register::getParamFromTmpStorage('email');
         $I->wait(2);
+        //Вся конструкция из-за того, что письмо с кодом может быть отправлено или не отправленно
+        //Это не тру вей, так как по заветам в тестах не должно быть ветвлений
         try {
             $I->click('Расширенный поиск');
             $I->wait(2);
@@ -131,6 +135,7 @@ class Register
         $I->clickWithLeftButton('.x-action-col-0.x-action-col-icon');
         $I->wait(3);
         $text = $I->grabTextFrom('form > label');
+        //Парсим текст и берем код
         if(preg_match("/активации: (.*?) /", $text,$matches))
         {
             $text1 = $matches[1];
@@ -149,7 +154,7 @@ class Register
         return $json['emailAndCode'][$emailOrPwd];
     }
 
-
+    //Одна функция для сохранения емейла или кода
     public function saveParamTmpStorage($type, $emailOrPwd)
     {
         $json = Register::getJson('tmpStorage.json');

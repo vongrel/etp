@@ -26,8 +26,13 @@ class RegisterULRFCest
         $I->amOnPage(Register::$URL);
         $I->waitForText('Укажите резидентский статус', 10);
         $I->click('Далее -->');
+        //В идеале все "$I->wait(2);" дожны быть заменены на похожие. Выигрыш во времени
+        //прохождения тестов, но писать дольше
         $I->waitForText('Регистрация на торговых площадках', 10);
         $Register = new Register($I);
+        //Предполагается, что данный метод будет являться основным в регистрациях
+        //При более детальном понимании площадки можно выделить общее и вынести в один метод, а не общее
+        //оставить более специфичным для конкретных регистраций
         $Register->fillFirstForm('Юр лицо из РФ');
         $I->wait(2);
         $I->click('Далее -->');
@@ -37,13 +42,18 @@ class RegisterULRFCest
         $I->wait(1);
         $I->doubleClick('//span[contains(text(), "91 Индивидуальные предприниматели")]');
         $I->wait(1);
+        //Выбран ИНН, который заполняет часть полей через контрагентов. Можно или удалять всех созданных
+        //пользователей после выполнения тестов (можно выполнять данное действие, даже если тесты упали,
+        //заодно проверяя реально ли они созданы. Более предпочтительный вариант). Или можно генерировать
+        //ИНН через сайты или скрипом (есть на в открытых репах)
         $I->fillField('input[name=inn]', '7842401454');
         $I->clickWithLeftButton('input[name=kpp]');
         $I->wait(2);
         $I->doubleClick('.x-grid3-col > div');
         $I->wait(2);
         $I->click('Да');
-        $I->wait(5);
+        //Ожидание такое большое, потому что запрос к контрагентам или быстрый или ооочень медленный
+        $I->wait(20);
         $I->click('OK');
         $I->wait(2);
         $I->fillField('//input[contains(@name, \'legal\') and contains(@name, \'city\')]', 'Омск');
@@ -51,6 +61,7 @@ class RegisterULRFCest
         $Register->fillProduction();
         $Register->fillCorporateData();
         $I->fillField('textarea[name=offered_products]', 'some text');
+        //Бик подтягивает часть полей
         $I->fillField('input[name=bik]','045209673');
         $I->fillField('input[name=account]', '12345678912345678900');
         $I->clickWithLeftButton('input[name=accept_processing]');
@@ -59,6 +70,8 @@ class RegisterULRFCest
         $I->wait(5);
         $I->click('Подтвердить');
         $I->waitForText('Активация адреса электронной почты', 25);
+        //Самое интересное, в новом окне, не закрывая основное админ логинится и достает ключ для
+        //верификации. Возможно также доставать и ссылку
         $admin = $I->haveFriend('admin');
         $admin->does(function(AcceptanceTester $I) {
             $I->amOnPage(LoginPage::$URL);
@@ -74,6 +87,7 @@ class RegisterULRFCest
             $Register->getEmailAndSaveVerifyCode();
             $I->wait(2);
         });
+        //Закрываем окно админа и получаем фокус на окне с активацией
         $admin->leave();
         $I->wait(2);
         $I->fillField('input[name=key]',$Register::getParamFromTmpStorage('confirmCode'));
